@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Multi-Level Dropdown Menu with Pure CSS - W3jar.Com</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+      integrity="sha512-r22gChDnGvBylk90+2e/ycr3RVrDi8DIOkIGNhJlKfuyQM4tIRAI062MaV8sfjQKYVGjOBaZBOA87z+IhZE9DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 10px;
+      }
+
+      .dropdown {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100px;
+        background-color: #0abf53;
+      }
+
+      .dropdown li {
+        position: relative;
+      }
+
+      .dropdown li a {
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+      }
+
+      .dropdown li ul {
+        position: absolute;
+        top: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: none;
+        line-height: normal;
+        background-color: #333;
+      }
+
+      .dropdown li ul li a {
+        text-align: left;
+        color: #cccccc;
+        font-size: 14px;
+        padding: 10px;
+        display: block;
+        white-space: nowrap;
+      }
+
+      .dropdown li ul li a:hover {
+        background-color: #0abf53;
+        color: #ffffff;
+      }
+
+      .dropdown li ul li ul {
+        left: 100%;
+        top: 0;
+      }
+
+      ul li:hover > a {
+        background-color: #0abf53;
+        color: #ffffff !important;
+      }
+
+      ul li:hover > ul {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <div class="table"></div> -->
+
+    <table class="table1" id="sam"></table>
+    <script>
+      let table1 = document.querySelector(".table1");
+      (async () => {
+        let workBook = XLSX.readFile(
+          await (await fetch("./excel.xlsx")).arrayBuffer()
+        );
+        console.log(workBook);
+
+        // let worksheet = workBook.SheetNames.forEach(name => {
+        //     let html = XLSX.utils.sheet_to_html(workBook.Sheets[name]);
+        //     table.innerHTML+=`
+        //     <h3>${name}</h3>${html}
+        //     `;
+
+        // });
+
+        // let h=XLSX.utils.sheet_to_html(workBook.SheetNames[0])
+        // console.log(h)
+
+        console.log(workBook.Sheets[workBook.SheetNames[0]]);
+
+        let w = XLSX.utils.sheet_to_html(
+          workBook.Sheets[workBook.SheetNames[0]]
+        );
+        // console.log(w)
+
+        table1.innerHTML = `
+              
+        ${w}
+             `;
+
+        var t = document.getElementById("sam"),
+          rIndex,
+          cIndex;
+        //console.log(t)
+        console.log(t.rows.length);
+        var r = t.rows.length - 10;
+        console.log(r);
+
+        let productD = document.getElementById("Product Details");
+        let types = document.getElementById("types");
+        let product = document.getElementById("product");
+        let models = document.getElementById("models");
+        // let gproduct= document.getElementById("gproduct")
+        let p = workBook.SheetNames[0];
+
+        console.log(types.type);
+
+        productD.innerHTML = p;
+        var n = 0;
+        // console.log(t.rows[1].cells[1].innerHTML)
+        //  Electronics.innerHTML=t.rows[1].cells[1].innerHTML
+
+        var text = "<ul>";
+        for (var i = 1; i < 5; i++) {
+          // if(t.rows[i].cells[1].innerHTML!=t.rows[i+1].cells[1].innerHTML){
+
+          let created = document.createElement("li");
+          created.innerHTML=t.rows[i].cells[1].innerHTML;
+           text += "<li><a href='#'>"+t.rows[i].cells[1].innerHTML+"</li>"
+           document.getElementById('types').append(created)
+
+          n++;
+
+        //   var a = document.createElement("a");
+        //   var l = document.createElement("li");
+        //   var t = document.createTextNode("my code");
+        //   console.log(t);
+
+        //   a.appendChild(t);
+        //   a.href = "#";
+        //   document.getElementById("types").appendChild(a);
+
+          // }
+
+          // for(var j=1;j<t.rows[i].cells.length;j++){
+          // console.log(i)
+          // console.log(t.rows[i].cells[j].innerHTML)
+
+          //  let created = document.createElement("li");
+          // created.innerHTML=t.rows[i].cells[j].innerHTML;
+          //  document.getElementById("types")[n].appendChild(created)
+          // //  document.getElementById("products").appendChild(created)
+          // //  document.getElementById("models").appendChild(created)
+
+          //  n++;
+
+          // }
+          //console.log(t.rows[i].cells[1].innerHTML)
+
+          // if(t.rows[i].innerHTML==t.rows[i+1].innerHTML){
+
+          //     for(var j=1;j<r;j++){
+
+          //     }
+          //   continue
+          // }
+          // else{
+          //     Grocery.innerHTML=t.rows[1].cells[1].innerHTML
+          // }
+        }
+
+        text += "</ul>";
+        console.log(text);
+        //document.getElementById("ul1").append(text);
+
+        //      let product = document.getElementById("Product Details")
+        //      let Electronics = document.getElementById("Electronics")
+        //      let Grocery = document.getElementById("Grocery")
+        // let p = workBook.SheetNames[0]
+
+        // product.innerHTML=p;
+      }
+      
+      )();
+
+    </script>
+
+
+    <ul class="dropdown" id="dd">
+      <li>
+        <a href="#" id="Product Details"></a>
+        <ul id="ul1">
+          <li>
+            <a href="#" id="types"></a>
+            <ul id="s">
+              <li>
+                <a href="#" id="products"></a>
+                <ul>
+                  <li><a href="" id="models"></a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <!-- <li><a href="#" id="Grocery"></a>
+                    <ul>
+                        <li><a href="#" id="gproduct"></a>
+                            <ul>
+                                <li><a href="">Submenu - 1</a></li>
+                                <li><a href="">Submenu - 2</a></li>
+                                <li><a href="">Submenu - 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">Submenu - 3</a></li>
+                    </ul>
+                </li> -->
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
